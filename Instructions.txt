@@ -1,0 +1,160 @@
+Originally written by: Alan Chatham
+Edited and adapted by: Michael Terry
+All original files located in the "Original UnoJoy Code" folder.
+
+*******************************************************
+* Instructions:                                       *
+* Load this code onto an Arduino Uno R3               *
+* or Mega 2560 R3. Other boards may be used, but      *
+* additional configuration may be required and is     *
+* outside the scope of this project. All the original *
+* code is available in this repository if you would   *
+* like to make a more customized controller, however, *
+* no additional support will be provided.             *
+*******************************************************
+Note: The following instructions have been taken from the original readme file. Some instructions have been updated or omitted to better reflect the specific scope of this project.
+
+Warning: It is possible to permanently damage components used in this project, specifically the Arduino. Please, follow instructions very carefully. Use at your own risk.
+
+UnoJoy
+======
+
+	UnoJoy! allows you to turn an Arduino Uno R3 (or Mega 2560 R3) into a PS3-compatible USB game controller.
+
+
+Getting Started
+===============
+
+
+	UnoJoy lets you use a plain, unmodified Arduino Uno R3
+	to create native USB joysticks.  It is a three-part system:
+
+	Drivers - Needed to re-flash the Arduino's USB communication chip
+	Software - The UnoJoy library for Arduino
+	Firmware - Code to load onto Arduino's USB communication chip
+
+	In order to make UnoJoy work, you'll need to take care of
+	all three parts.  We're here to make that process as easy as
+	possible.
+
+
+	Drivers
+	=======
+
+	In the UnoJoy directory, there are installer files for the drivers
+	you'll need for the DFU bootloader. This project was completed using
+        Windows 10. Any other OS is outside the scope of these instructions.
+        There are additional instructions for Mac and Linux in the original
+        readme file. Run the following to install the required Windows
+        driver located in the Drivers folder:
+	"UnoJoyDriverInstaller.bat"
+        
+        Note: Installer may claim that driver doesn't fully install. This happened
+        on my system, but did not prevent anything from working.
+
+	On Windows, you'll also need to download and install Atmel's FLIP tool.
+        The version provided is compatible with Windows 10 as of November 2021, but
+        may not be compatible in future verions of Windows.
+        Run the following EXE located in the Software folder to install Flip:
+        "Flip Installer - 3.4.7.112"
+        
+        Updated versions of the program may be found at the following URL:
+	https://www.microchip.com/developmenttools/ProductDetails/flip
+
+
+	Software
+	========
+
+	To get started, first, go to the Code folder. 
+        Open up "ControllerSketch.zip.ino" located in
+        the Code\ControllerSketch.zip\ folder, and upload that code
+	to your Arduino.
+
+	Note: An Arduino compatible IDE is required to upload the
+        code. Setup and operation of that software is not covered here,
+        but you can Download "arduino-1.8.16-windows.exe" from the following
+        URL: 
+        https://www.arduino.cc/en/software
+
+        Note: Listed currently available version. IDE may have new version
+        by the time project is attempted or URL may be outdated.
+
+        Additional information on the Arduino IDE may be found at the
+        following URL:
+        https://www.arduino.cc/en/software
+
+	Hardware
+	========
+
+	Now that we have the proper code on the Arduino, we need
+	to reprogram the communications chip on the Arduino.
+	In order to do this, you need to first put the Arduino
+	into 'Arduino UNO DFU' mode. The official documentation
+	for this is here:
+
+	http://arduino.cc/en/Hacking/DFUProgramming8U2
+
+	----HOW TO PUT YOUR ARDUINO INTO DFU MODE----
+	You do that by shorting two of the pins on the block of 6 pins between
+	the USB connector.  Using a piece of wire or other small metal object,
+	connect the 2 pins closes to the USB connector together.
+	(the ones that turn from o to | in the diagram)
+
+						  ---->
+			o o o           |        | o o 
+	----|   o o o           |----|   | o o
+		|                   |    |     
+	USB |                   |USB |      
+		|                   |    |   
+	----|                   |----|
+							|
+	It should disconnect (be-dun.) and reconnect (buh-din!) 
+	and now show up to your system as 'Arduino UNO DFU'.
+
+	ONCE YOU ARE IN DFU MODE
+	========================
+
+	Once the Arduino is in DFU mode, to update the firmware, simply click:
+
+	Uno R3: "TurnIntoAJoystick.bat" located in the Code folder.
+        Mega 2560 R3: "MegaJoy - Attack!.bat" located in the
+                       Code\Mega2560R3 folder.
+
+
+	IMPORTANT: Once you update the firmware, you'll need to 
+	unplug and plug the Arduino back in for it to show up with
+	the new firmware - it'll just hang out in DFU mode until you do.
+
+        Note: If there is a problem with the Arduino sketch you uploaded
+        and the controller doesn't work, before updating the code, the Arduino
+        will have to be back in "Arduino Mode". Steps to accomplish this are
+        listed at the end of this document.
+
+	When you plug the Arduino in again, it will show up to your
+	computer as an 'UnoJoy Joystick'. Even if it doesn't show up in
+        device manager, it may still work. Follow the next step to confirm.
+
+        Next, test to make sure that it's working, install "x360ce.exe"
+        from the Software folder. Once open, you will see the layout of
+        an Xbox 360 controller. You should be able to press a button on
+        the controller and see the corresponding button press on the 
+        Xbox 360 controller. You may have to close and reopen the software
+        before the button press and analog stick movement are displayed.
+
+        If you see the button presses and stick movement, congradulations,
+        you're done. This controller can be used on PC emulators, including
+        Raspberry Pi (RetroPie), and even some commercial games that support
+        a controller, provided your controller has enough buttons to map in 
+        your game of choice.
+
+        If at first you don't succeed, try again. If your controller is not
+        working and you need to troubleshoot the code, the Arduino will need
+        to be put back into "Arduino Mode". Use the same process as before.
+        Put the Arduino into "DFU Mode" then run one of the following, depending
+        on your version of the Arduino:
+
+        Uno R3: "TurnIntoAnArduino.bat" in the Code folder.
+        Mega 2560 R3: "TurnIntoAnArduino.bat" in the Code\Mega2560R3 folder.
+
+        After that, reseat the usb cable and upload your code. Use previous
+        steps to convert back to a controller.
